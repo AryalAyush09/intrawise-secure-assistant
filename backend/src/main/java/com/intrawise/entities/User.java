@@ -2,6 +2,7 @@ package com.intrawise.entities;
 
 import java.time.LocalDateTime;
 
+import com.intrawise.Enum.EmailStatus;
 import com.intrawise.Enum.Role;
 
 import jakarta.persistence.*;
@@ -31,6 +32,10 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private EmailStatus status;
 
     @Column(updatable = false)
     private LocalDateTime createdAt;

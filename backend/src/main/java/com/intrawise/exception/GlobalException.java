@@ -1,10 +1,9 @@
-package com.intrawsie.exception;
+package com.intrawise.exception;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -32,6 +31,12 @@ public class GlobalException {
    @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<ApiResponse<?>> handleBadRequest(BadRequestException ex){
 	   ApiResponse<?> response = new ApiResponse<>(false, ex.getMessage(), null);
-	   return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+	   return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+   }
+   
+   @ExceptionHandler(ResourceNotFoundException.class)
+   public ResponseEntity<ApiResponse<?>> handleNotFound(ResourceNotFoundException ex) {
+       ApiResponse<?> response = new ApiResponse<>(false, ex.getMessage(), null);
+       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
    }
 }

@@ -15,7 +15,7 @@ import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.Claims;
 
 @Component
-public class jwtUtil {
+public class JwtUtil {
      private Key key;
      
      @Value("${JWT_SECRET:mysupersecuresecretkeyforjwtgeneration123!}")
