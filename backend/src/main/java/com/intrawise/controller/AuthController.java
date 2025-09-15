@@ -1,6 +1,7 @@
 package com.intrawise.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,7 @@ import lombok.AllArgsConstructor;
 public class AuthController {
    private final AuthService authService;
    
+   @PreAuthorize("hasRole('ADMIN')or hasRole('HR')")
    @PostMapping("/register")
    public ResponseEntity<ApiResponse<?>> registerUser(@Valid @RequestBody RegisterRequestDTO dto){
 	   ApiResponse<?> response = authService.registerUser(dto);

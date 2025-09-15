@@ -39,4 +39,10 @@ public class GlobalException {
        ApiResponse<?> response = new ApiResponse<>(false, ex.getMessage(), null);
        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
    }
+   
+   @ExceptionHandler(FileUploadException.class)
+   public ResponseEntity<ApiResponse<?>> handleFile(FileUploadException ex){
+	   ApiResponse<?> response = new ApiResponse<>(false, ex.getMessage(), null);
+	   return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+   }
 }
