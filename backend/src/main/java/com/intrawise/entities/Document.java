@@ -39,7 +39,7 @@ public class Document {
   @Enumerated(EnumType.STRING)
   @Column(nullable = false)
   private Role roleAllowed;  // reuse your existing Role enum
-  
+  	
   private String fileType; // e.g. "pdf", "docx"
   private String originalFileName;
   
