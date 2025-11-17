@@ -1,5 +1,9 @@
 package com.intrawise.Enum;
 
 public enum Role {
-   ADMIN, USER, HR, IT, EMPLOYEE
+	ADMIN,
+	USER,
+	HR,
+	IT,
+	EMPLOYEE
 }

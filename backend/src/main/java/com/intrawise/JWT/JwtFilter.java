@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.security.core.userdetails.User;
 
 import lombok.AllArgsConstructor;
 
@@ -32,18 +33,27 @@ public class JwtFilter extends OncePerRequestFilter {
             String token = authHeader.substring(7);
 
             try {
-                String extractedEmail = jwtUtil.extractEmail(token);
+                String userId = jwtUtil.extractUserId(token);
 
-                if (extractedEmail != null && jwtUtil.validateToken(extractedEmail, token)) {
-                    String role = jwtUtil.extractRole(token);
+                if (userId != null && jwtUtil.validateToken(userId, token)) {
+
+                    String role = jwtUtil.extractRole(token).toUpperCase().trim();
+
+                    String grantedRole = role.startsWith("ROLE_") ? role : "ROLE_" + role;
+
+                    User principal = new User(userId, "",
+                            Collections.singletonList(new SimpleGrantedAuthority(grantedRole)));
 
                     UsernamePasswordAuthenticationToken authentication =
-                            new UsernamePasswordAuthenticationToken(extractedEmail, null,
-                                    Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role))
+                            new UsernamePasswordAuthenticationToken(
+                                    principal,
+                                    null,
+                                    principal.getAuthorities()
                             );
 
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authentication);
+
                 }
 
             } catch (Exception ex) {
@@ -54,9 +64,24 @@ public class JwtFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
     
+//    @Component
+//    public class DebugAuthFilter extends OncePerRequestFilter {
+//        @Override
+//        protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+//                throws ServletException, IOException {
+//            var auth = SecurityContextHolder.getContext().getAuthentication();
+//            System.out.println("🔍 In DebugAuthFilter, before controller:");
+//            System.out.println("Authentication: " + auth);
+//            if (auth != null) {
+//                System.out.println("Authorities: " + auth.getAuthorities());
+//            }
+//            chain.doFilter(request, response);
+//        }
+//    }
+
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
     	String path = request.getServletPath();
-    	return path.startsWith("api/login") || path.startsWith("/api/register");
+    	return path.startsWith("/api/v1/auth/login") || path.startsWith("/api/v1/auth/register");
     }
 }

@@ -35,9 +35,10 @@ public class JwtUtil {
      public String generateToken(Long userId, Role role) {
     	 return Jwts.builder()
     			 .setSubject(String.valueOf(userId))
-    			 .claim("role", role.name())
+    			 .claim("role", role.name().toUpperCase())
     			 .setIssuedAt(new Date())
-    			 .setExpiration(new Date(System.currentTimeMillis() +tokenExpirationDays *24*60*60)) //1day
+    			 .setExpiration(new Date(System.currentTimeMillis()
+    					 +tokenExpirationDays *24*60*60*1000L)) //1day
     			 .signWith(key, SignatureAlgorithm.HS256)
     			 .compact();
      }
@@ -47,29 +48,30 @@ public class JwtUtil {
     			 .setSubject(email)
     			 .claim("role", role.name())
     			 .setIssuedAt(new Date())
-    			 .setExpiration(new Date(System.currentTimeMillis() + resetTokenExpirationMinutes*60))  //15min
+    			 .setExpiration(new Date(System.currentTimeMillis() 
+    					 + resetTokenExpirationMinutes*60*1000L))  //15min
     			 .signWith(key, SignatureAlgorithm.HS256)
     			 .compact();
      }
      
      // extract user id or email from jwt token
-     public String extractEmail(String token) {
+     public String extractUserId(String token) {
     	 return extractAllClaims(token).getSubject();
      }
      
      // extract role from jwt token 
      public String extractRole(String token) {
-    	 return extractAllClaims(token).get("role", String.class);
+    	 return extractAllClaims(token).get("role", String.class).toUpperCase().trim();
      }
      
      //check whether token is expired or not 
-     public boolean isTokenExpried(String token) {
+     public boolean isTokenExpired(String token) {
     	 return extractAllClaims(token).getExpiration().before(new Date());
      }
      
      //validate the token
-     public boolean validateToken(String email, String token) {
-    	 return extractEmail(token).equals(email) && isTokenExpried(token);
+     public boolean validateToken(String userId, String token) {
+    	 return extractUserId(token).equals(userId) && !isTokenExpired(token);
      }
      
      

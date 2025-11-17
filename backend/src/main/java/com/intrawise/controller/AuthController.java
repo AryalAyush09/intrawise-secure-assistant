@@ -21,7 +21,7 @@ import lombok.AllArgsConstructor;
 public class AuthController {
    private final AuthService authService;
    
-   @PreAuthorize("hasRole('ADMIN')or hasRole('HR')")
+//   @PreAuthorize("hasRole('ADMIN')or hasRole('HR')")
    @PostMapping("/register")
    public ResponseEntity<ApiResponse<?>> registerUser(@Valid @RequestBody RegisterRequestDTO dto){
 	   ApiResponse<?> response = authService.registerUser(dto);

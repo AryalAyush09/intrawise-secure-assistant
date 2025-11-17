@@ -33,7 +33,7 @@ public class DocumentService {
 	
    public ApiResponse<?> uploadDocument(Long userId , DocumentRequestDto dto){
 	   log.info("Attempting to upload document for userId: {}", userId);
-	   
+	 
 	   Optional<User> optionalUser = userRepo.findById(userId);
 	   if(optionalUser.isEmpty()) {
 		   log.warn("User not found with ID:{}", userId);
@@ -43,7 +43,10 @@ public class DocumentService {
 	   User user = optionalUser.get();
 	   Role role = user.getRole();
 
-	   if((!role.equals(Role.ADMIN)) && (!role.equals(Role.HR))) {
+	   log.info("DB user role: '{}' (class: {})", role, role != null ?
+			   role.getClass().getName() : "null"); 
+
+	   if ((!role.equals(Role.ADMIN)) && (!role.equals(Role.HR))){
 		   log.warn("Access denied for user role :{}", role);
 		   throw new BadRequestException("Only ADMIN and HR are allowed to upload documents.");
 	   }  
@@ -58,8 +61,12 @@ public class DocumentService {
 		   String filePath = fileService.storeFile(file);
 		   String content = fileUtil.extractText(file);
 		   String extractedTitle = fileUtil.extractTitle(file);
-		   String finalTitle = (dto.getTitle() != null && !dto.getTitle().isBlank()) ? dto.getTitle() : extractedTitle;
+		   String finalTitle = (dto.getTitle() != null && !dto.getTitle().isBlank()) ? 
+				   dto.getTitle() : extractedTitle;
 		   log.info("Document title used: {}", finalTitle);
+		   
+		   System.out.println("content class = " + content.getClass().getName());
+		   System.out.println("content length = " + content.length());
 
 		   Document document = Document.builder()
 				   .title(finalTitle)

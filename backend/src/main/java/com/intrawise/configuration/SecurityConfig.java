@@ -24,29 +24,29 @@ import lombok.AllArgsConstructor;
 
 @Configuration
 @EnableMethodSecurity
+
 @AllArgsConstructor
 public class SecurityConfig {
 	
     private final JwtFilter jwtFilter;
 	
     @Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-		http
-		 .csrf(crsf -> crsf.disable())
-		 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-		 
-		 .authorizeHttpRequests(auth -> auth
-				 .requestMatchers(HttpMethod.OPTIONS).permitAll()
-		 .requestMatchers("/api/admin/**").hasRole("ADMIN")
-		 .requestMatchers("/api/user/**").hasAnyRole("USER", "ADMIN")
-		 .requestMatchers(
-				 "/api/v1/auth/login",
-                 "/api/v1/auth/register"
-		 ).permitAll()
-		 .anyRequest().authenticated()
-		 )
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .csrf(csrf -> csrf.disable())
+            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+            .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers(HttpMethod.OPTIONS).permitAll()
+                .requestMatchers("/api/v1/auth/**").permitAll()
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                .requestMatchers("/api/user/**").hasAnyRole("USER", "ADMIN")
+                .requestMatchers("/api/v1/document/**").hasAnyRole("HR", "ADMIN")
+                .anyRequest().authenticated()
+            )
           .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
           .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+
           return http.build();
           
 	}
@@ -54,10 +54,10 @@ public class SecurityConfig {
     @Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 	  CorsConfiguration config = new CorsConfiguration();
-	    config.setAllowedOrigins(List.of("http://localhost:5173"));
 	    config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
 	    config.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept"));
-	    config.setAllowCredentials(true);
+//	    config.setAllowCredentials(true);
+	    config.addAllowedOriginPattern("*");
 	    
 	    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
