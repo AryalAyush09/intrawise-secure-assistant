@@ -38,14 +38,14 @@ public class DocumentController {
 	             (Authentication auth, @Valid @ModelAttribute DocumentRequestDto dto){
 		 System.out.println("Received files DTO: " + dto.getFile());
 		    if (dto.getFile() != null) {
-		        System.out.println("📁 File count: " + dto.getFile().length);
+		        System.out.println(" File count: " + dto.getFile().length);
 		        for (MultipartFile f : dto.getFile()) {
 		            System.out.println(" File name: " + f.getOriginalFilename());
 		            System.out.println(" Size = " + f.getSize());
 		            System.out.println(" Type = " + f.getContentType());
 		        }
 		    } else {
-		        System.out.println("❌ dto.getFile() is null");
+		        System.out.println("dto.getFile() is null");
 		    }
 
 		Long userId = Long.parseLong(auth.getName());
