@@ -16,7 +16,6 @@ import com.intrawise.repository.UserRepository;
 import com.intrawise.requestDto.DocumentRequestDto;
 import com.intrawise.responseDTO.ApiResponse;
 import com.intrawise.util.FileParseUtil;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +29,7 @@ public class DocumentService {
 	private final DocumentRepository docRepo;
 	private final FileStorageService fileService;
 	private final FileParseUtil fileUtil;
+	private final DocumentEmbeddingService embeddingService;
 	
    public ApiResponse<?> uploadDocument(Long userId , DocumentRequestDto dto){
 	   log.info("Attempting to upload document for userId: {}", userId);
@@ -78,8 +78,11 @@ public class DocumentService {
 				   .roleAllowed(user.getRole())
 				   .build();
 		   
-		   docRepo.save(document);
+		  Document saved = docRepo.save(document);
 		   log.info("File Saved:{}", filePath);
+		   
+		   embeddingService.processDocument(saved	);
+		   	
 	   }
 	   
 	   return new ApiResponse<>(true, "Uploaded successfully", null);

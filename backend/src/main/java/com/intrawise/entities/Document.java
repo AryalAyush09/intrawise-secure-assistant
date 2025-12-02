@@ -49,9 +49,6 @@ public class Document {
   @Column(updatable = false)
   private LocalDateTime createdAt;
   
-  @Column(columnDefinition = "vector(768)")
-  private float[] embedding;
-  
   @PrePersist
   protected void onCreate() {
       this.createdAt = LocalDateTime.now();
