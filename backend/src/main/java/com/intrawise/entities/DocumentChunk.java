@@ -45,7 +45,7 @@ public class DocumentChunk {
     @Enumerated(EnumType.STRING)
     private Role roleAllowed;
 
-    @Column(columnDefinition = "vector(768)")
+    @Column(columnDefinition = "vector(384)")
     private float[] embedding;
 
     private LocalDateTime createdAt;
