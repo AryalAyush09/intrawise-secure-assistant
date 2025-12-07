@@ -25,7 +25,7 @@ public class DocumentEmbeddingService {
 	 
      @Transactional
       public void processDocument(Document document) {
-    	 List<String> chunks = chunkUtil.chunkText(document.getContent(), 800);
+    	 List<String> chunks = chunkUtil.chunkTextWithOverLap(document.getContent(), 800, 120);
     	 List<DocumentChunk> chunkEntities = new ArrayList<>();
     	 
     	 int index = 0;

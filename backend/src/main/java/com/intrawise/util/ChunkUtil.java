@@ -7,14 +7,25 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ChunkUtil {
-     public List<String> chunkText(String content, int chunkSize){
+     public List<String> chunkTextWithOverLap(String content, int chunkSize, int overLap){
     	 List<String> chunks = new ArrayList<>();
     	 
-    	 for (int i = 0; i < content.length(); i += chunkSize) {
-             int end = Math.min(content.length(), i + chunkSize);
-             String chunk = content.substring(i, end).trim();
-             if (!chunk.isBlank()) chunks.add(chunk);
-         }
+    	 if(overLap >= chunkSize) {
+    		 throw new IllegalArgumentException("Overlap size must be smaller than chunksie");
+    	 }
+    	 int start = 0;
+    	 int length = content.length();
+    	 while(start < length) {
+    		 int end  = Math.min(start + chunkSize,length);
+    		 
+    		 String chunk = content.substring(start, end).trim();
+    		 
+    		 if(!chunk.isBlank()) {
+    			 chunks.add(chunk);
+    		 }
+    		 
+    		 start = start + chunkSize - overLap;
+    	 }
     	 return chunks;
-     }
+     }	
 }

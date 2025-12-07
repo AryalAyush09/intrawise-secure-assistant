@@ -81,7 +81,7 @@ public class DocumentService {
 		  Document saved = docRepo.save(document);
 		   log.info("File Saved:{}", filePath);
 		   
-		   embeddingService.processDocument(saved	);
+		   embeddingService.processDocument(saved);
 		   	
 	   }
 	   
