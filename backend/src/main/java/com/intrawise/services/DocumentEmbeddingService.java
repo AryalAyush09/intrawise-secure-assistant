@@ -48,8 +48,4 @@ public class DocumentEmbeddingService {
     	 }
     	 documentChunkRepo.saveAll(chunkEntities);
      }
-         
-//     public float[] generateEmbedding(String text) {
-//    	    return embeddingModel.embed(text);
-//    	}
 }
