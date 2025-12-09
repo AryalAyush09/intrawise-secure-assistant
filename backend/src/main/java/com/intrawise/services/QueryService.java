@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @Builder
 public class QueryService {
   private final UserRepository userRepo;
-  private final DocumentEmbeddingService embeddingService;
+  private final TextEmbeddingService embeddingService;
   
 	public float[] embedAskQuery(Long userId, QueryDTO dto) {
 		
