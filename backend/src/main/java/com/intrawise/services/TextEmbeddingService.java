@@ -11,15 +11,15 @@ public class TextEmbeddingService {
 	
 	    private final EmbeddingModel embeddingModel;
 	
-   public float[] embeddedQuery(String query) {
+    public float[] embeddedQuery(String query) {
     	
-    if (query == null || query.isBlank()) {
+     if (query == null || query.isBlank()) {
               throw new IllegalArgumentException("Question cannot be empty");
           }
     
-    String cleanQuery = query.trim().toLowerCase();
+      String cleanQuery = query.trim().toLowerCase();
     
-    return embeddingModel.embed(cleanQuery);
+     return embeddingModel.embed(cleanQuery);
 
     }
 	
