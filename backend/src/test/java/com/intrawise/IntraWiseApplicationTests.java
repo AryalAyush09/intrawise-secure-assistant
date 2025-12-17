@@ -8,6 +8,9 @@ class IntraWiseApplicationTests {
 
 	@Test
 	void contextLoads() {
+		
+		System.out.println(System.getenv("HUGGINGFACE_TOKEN"));
+
 	}
 
 }
