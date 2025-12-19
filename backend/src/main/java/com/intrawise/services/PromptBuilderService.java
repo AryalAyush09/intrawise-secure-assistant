@@ -9,11 +9,13 @@ import com.intrawise.requestDto.SimilarChunk;
 
 @Service
 public class PromptBuilderService {
-    private static final String RAG_RULES = """ 
-    		You are an entripise assistants . You must only answer onlly using contect provided.
-    		If the answer is not present in the context respond with 
-    		"Your query is out of the company policy" Donot guess your own.
-    		""";
+	private static final String RAG_RULES = """
+			You are an enterprise internal assistant.
+			Answer STRICTLY using the provided context.
+			If the answer is not present, reply exactly:
+			"Your query is out of the company policy."
+			Do not use any external knowledge.
+			""";
     
     public RagPrompt buildRagPrompt(String query, List<SimilarChunk> chunks) {
     	StringBuilder context = new StringBuilder();

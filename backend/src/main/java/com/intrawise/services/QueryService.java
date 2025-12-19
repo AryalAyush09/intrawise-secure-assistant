@@ -44,15 +44,13 @@ public class QueryService {
 		List<SimilarChunk> results = new ArrayList<>();
 		
 		for (Object[] row : rows) {
-            Long id = ((Number) row[0]).longValue();
-            String text = (String) row[1];
-            Long docId = ((Number) row[2]).longValue();
-            int chunkIndex = ((Number) row[3]).intValue();
-            float distance = ((Number) row[4]).floatValue();
+	        String text = (String) row[0];          // chunk_text
+	        int chunkIndex = ((Number) row[3]).intValue(); // chunk_index
+	        Long docId = ((Number) row[4]).longValue();    // document_id
+	        float distance = ((Number) row[5]).floatValue(); // similarity_score
 
-            results.add(new SimilarChunk(id, text, distance, docId, chunkIndex));
-        }
-
+	        results.add(new SimilarChunk(null, text, distance, docId, chunkIndex));
+	    }
         return results;
     }
 	

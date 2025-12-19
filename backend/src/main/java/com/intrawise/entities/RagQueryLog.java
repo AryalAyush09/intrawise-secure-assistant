@@ -6,6 +6,8 @@ import com.intrawise.Enum.Role;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(name = "rag_query_logs")
@@ -32,9 +34,11 @@ public class RagQueryLog {
     private String answer;
 
     @Column(columnDefinition = "jsonb")
+    @JdbcTypeCode(SqlTypes.JSON)
     private String retrievedChunks; // JSON string of top chunks
 
     @Column(columnDefinition = "jsonb")
+    @JdbcTypeCode(SqlTypes.JSON)
     private String similarityScores; // JSON string of distances
 
     private LocalDateTime createdAt;

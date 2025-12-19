@@ -148,12 +148,6 @@
             <version>3.2.2</version>
         </dependency>
 
-<dependency>
-    <groupId>org.springframework.ai</groupId>
-    <artifactId>spring-ai-huggingface-spring-boot-starter</artifactId>
-    <version>1.0.0-M6</version>
-</dependency>
-    
 <!--    hugging face and ollama-->
 <dependency>
     <groupId>org.springframework.ai</groupId>
@@ -163,13 +157,6 @@
     <groupId>org.springframework.ai</groupId>
     <artifactId>spring-ai-transformers</artifactId>
 </dependency>
-
-<dependency>
-    <groupId>org.springframework.ai</groupId>
-    <artifactId>spring-ai-chat</artifactId>
-    <version>1.0.0</version> <!-- match your spring-ai-bom version -->
-</dependency>
-
 
   </dependencies> 
     <build>
