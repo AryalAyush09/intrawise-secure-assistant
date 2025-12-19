@@ -28,7 +28,7 @@ public class PromptBuilderService {
     	}
     	
     	RagPrompt prompt = RagPrompt.builder()
-    			.context(RAG_RULES + "/n /n" + context)
+    			.context(RAG_RULES + "\n\n" + context)
     			.question(query)
     			.build();
     	

@@ -1,64 +1,49 @@
-//package com.intrawise.services;
-//
-//import org.springframework.stereotype.Service;
-//
-//import lombok.AllArgsConstructor;
-//import org.springframework.ai.chat.model.ChatModel;
-//
-//import org.springframework.ai.chat.messages.UserMessage;
-//
-//@Service
-//@AllArgsConstructor
-//public class LLMService {
-//	
-//	private final ChatModel chatModel;
-//     
-//     public String getAnswer(String context, String query){
-//    	 String finalPrompt = """
-//    			    %s
-//    			    User question: %s
-//
-//    			    Provide the best possible answer based ONLY on the context.
-//    			""".formatted(context, query);
-//    	 
-//    	  UserMessage msg = new UserMessage(finalPrompt);
-//
-//          String response = chatModel.call(msg);
-//
-//          return response;
-//     }
-//}
-
 
 package com.intrawise.services;
 
-import lombok.AllArgsConstructor;
-import org.springframework.ai.chat.model.ChatModel;
-import org.springframework.ai.chat.messages.UserMessage;
+import java.util.*;
+
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 @Service
-@AllArgsConstructor
 public class LLMService {
 
-    private final ChatModel chatModel;
+    private static final String OLLAMA_URL = "http://localhost:11434/api/chat";
+    private static final String MODEL = "phi3";
+
+    private final RestTemplate restTemplate = new RestTemplate();
 
     public String getAnswer(String context, String query) {
 
         String finalPrompt = """
                 %s
 
-                User question: %s
+                User Question:
+                %s
 
-                Provide the best possible answer based ONLY on the context.
+                Answer ONLY using the above context.
                 """.formatted(context, query);
 
-        UserMessage message = new UserMessage(finalPrompt);
+        Map<String, Object> body = new HashMap<>();
+        body.put("model", MODEL);
+        body.put("stream", false);
 
-        // chatModel.call() returns the assistant's response directly as a String
-        return chatModel.call(message);
+        List<Map<String, String>> messages = new ArrayList<>();
+        messages.add(Map.of(
+                "role", "user",
+                "content", finalPrompt
+        ));
+
+        body.put("messages", messages);
+
+        Map response = restTemplate.postForObject(
+                OLLAMA_URL,
+                body,
+                Map.class
+        );
+
+        Map message = (Map) response.get("message");
+        return message.get("content").toString();
     }
 }
-
-
-

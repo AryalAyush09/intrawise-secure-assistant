@@ -12,12 +12,4 @@ public class IntraWiseApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(IntraWiseApplication.class, args);
 	}
-	
-	
-	  @Bean
-	    ApplicationRunner verify(ChatModel chatModel) {
-	        return args -> {
-	            System.out.println("ChatModel bean = " + chatModel.getClass());
-	        };
-	    }
 }

@@ -24,30 +24,17 @@
     </properties>
 
     <!-- Spring AI BOM (Correct Version) -->
-    <!--<dependencyManagement>
+    <dependencyManagement>
         <dependencies>
            <dependency>
             <groupId>org.springframework.ai</groupId>
             <artifactId>spring-ai-bom</artifactId>
-            <version>1.0.0</version>  or latest 
+            <version>1.0.0</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>
         </dependencies>
-    </dependencyManagement>-->
-    
-   <dependencyManagement>
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.ai</groupId>
-            <artifactId>spring-ai-bom</artifactId>
-            <version>0.8.1</version>
-            <type>pom</type>
-            <scope>import</scope>
-        </dependency>
-    </dependencies>
-</dependencyManagement>
-
+    </dependencyManagement>
 
     <dependencies>
 
@@ -161,28 +148,30 @@
             <version>3.2.2</version>
         </dependency>
 
-        <!-- Spring AI HuggingFace-->
-<!-- HuggingFace Embedding -->
-<!--<dependency>
+<dependency>
+    <groupId>org.springframework.ai</groupId>
+    <artifactId>spring-ai-huggingface-spring-boot-starter</artifactId>
+    <version>1.0.0-M6</version>
+</dependency>
+    
+<!--    hugging face and ollama-->
+<dependency>
     <groupId>org.springframework.ai</groupId>
     <artifactId>spring-ai-huggingface</artifactId>
 </dependency>
-
-<dependency>
-    <groupId>org.springframework.ai</groupId>
-    <artifactId>spring-ai-starter-model-huggingface</artifactId>
-</dependency>
--->
 <dependency>
     <groupId>org.springframework.ai</groupId>
     <artifactId>spring-ai-transformers</artifactId>
 </dependency>
-<!--
+
 <dependency>
     <groupId>org.springframework.ai</groupId>
-    <artifactId>spring-ai-openai-spring-boot-starter</artifactId>
+    <artifactId>spring-ai-chat</artifactId>
+    <version>1.0.0</version> <!-- match your spring-ai-bom version -->
 </dependency>
--->
+
+
+  </dependencies> 
     <build>
         <plugins>
             <!-- Lombok Annotation Processor -->
