@@ -74,6 +74,6 @@ public class QueryService {
 		   
 		   ragQueryLogService.saveLog(userId, role, query, answer, chunks);
 		   
-		   return new RagResponse(answer , chunks);
+		   return new RagResponse(answer);
 	}
 }

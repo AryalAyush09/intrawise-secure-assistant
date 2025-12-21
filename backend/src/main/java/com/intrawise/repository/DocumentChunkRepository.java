@@ -31,7 +31,7 @@ public interface DocumentChunkRepository extends JpaRepository<DocumentChunk, Lo
             "(embedding <=> CAST(:queryEmbedding AS vector)) AS similarity_score " +
             "FROM document_chunks " +
 //            "WHERE role_allowed = :userRole " +
-            "WHERE (embedding <=> CAST(:queryEmbedding AS vector)) < 0.40 " +
+            "WHERE (embedding <=> CAST(:queryEmbedding AS vector)) < 0.80 " +
             "ORDER BY embedding <=> CAST(:queryEmbedding AS vector) " +
             "LIMIT :limit",
     nativeQuery = true)

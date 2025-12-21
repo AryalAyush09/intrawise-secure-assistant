@@ -1,0 +1,81 @@
+/* Body & background */
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+   
+    background-size: cover;
+  }
+  
+  /* Overlay to darken image for readability */
+  .login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4); /* semi-transparent overlay */
+  }
+  
+  /* Login box */
+  .login-box {
+    background: #ffffff; /* white background */
+    border-radius: 15px;
+    padding: 40px 35px;
+    width: 350px;
+    max-width: 90%;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    text-align: center;
+  }
+  
+  /* Heading */
+  h2 {
+    color: #556B2F; /* olive green */
+    margin-bottom: 30px;
+    font-weight: 600;
+  }
+  
+  /* Input fields */
+  .login-box input {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    outline: none;
+    transition: all 0.2s ease;
+  }
+  
+  input:focus {
+    border-color: #556B2F; /* olive green */
+    box-shadow: 0 0 5px rgba(85,107,47,0.5);
+  }
+  
+  /* Button */
+  .login-box button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: #556B2F; /* olive green */
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #6B8E23; /* slightly lighter olive */
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(85,107,47,0.4);
+  }
+  
+  /* Error message */
+  .error-message {
+    color: #ff4b5c;
+    margin-top: 15px;
+    font-weight: 500;
+  }
+  
